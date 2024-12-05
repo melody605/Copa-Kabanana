@@ -10,8 +10,8 @@ const login = async (userInfo: UserLogin) => {
         'Content-Type': 'application/json' }, 
       body: JSON.stringify(userInfo) 
     });
-    
-    // che3cking if the response is correct, if not throws an error 
+
+    // checking if the response is correct, if not throws an error 
 
     if (!response.ok) { throw new Error('Login request failed'); } 
     const data = await response.json(); 
