@@ -23,16 +23,9 @@ export function UserFactory(sequelize) {
             allowNull: false,
         },
     }, {
-        tableName: 'users',
-        sequelize,
-        hooks: {
-            beforeCreate: async (user) => {
-                await user.setPassword(user.password);
-            },
-            beforeUpdate: async (user) => {
-                await user.setPassword(user.password);
-            },
-        }
+        sequelize, // Add sequelize instance here
+        tableName: 'users', // Add table name here
+        timestamps: true,
     });
     return User;
 }

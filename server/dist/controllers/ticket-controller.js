@@ -22,7 +22,8 @@ export const getAllTickets = async (_req, res) => {
 export const getTicketById = async (req, res) => {
     const { id } = req.params;
     try {
-        const ticket = await Ticket.findByPk(id, {
+        const ticket = await Ticket.findOne({
+            where: { id },
             include: [
                 {
                     model: User,
@@ -57,24 +58,25 @@ export const createTicket = async (req, res) => {
 export const updateTicket = async (req, res) => {
     const { id } = req.params;
     const { name, status, description, assignedUserId } = req.body;
-    try {
-        const ticket = await Ticket.findByPk(id);
-        if (ticket) {
-            ticket.name = name;
-            ticket.status = status;
-            ticket.description = description;
-            ticket.assignedUserId = assignedUserId;
-            await ticket.save();
-            res.json(ticket);
-        }
-        else {
-            res.status(404).json({ message: 'Ticket not found' });
-        }
+    const ticket = await Ticket.findOne({ where: { id } });
+    const ticket = await Ticket.findByPk(id);
+    if (ticket) {
+        ticket.name = name;
+        ticket.status = status;
+        ticket.description = description;
+        ticket.assignedUserId = assignedUserId;
+        await ticket.save();
+        res.json(ticket);
     }
-    catch (error) {
-        res.status(400).json({ message: error.message });
+    else {
+        res.status(404).json({ message: 'Ticket not found' });
     }
 };
+try { }
+catch (error) {
+    res.status(400).json({ message: error.message });
+}
+;
 // DELETE /tickets/:id
 export const deleteTicket = async (req, res) => {
     const { id } = req.params;
