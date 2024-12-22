@@ -6,7 +6,7 @@ import { UserData } from '../interfaces/UserData';
 import { retrieveUsers } from '../api/userAPI';
 
 const CreateTicket = () => {
-  const [newTicket, setNewTicket] = useState<TicketData>(
+  const [newTicket, setNewTicket] = useState<TicketData | undefined>(
     {
       id: 0,
       name: '',
@@ -60,7 +60,7 @@ const CreateTicket = () => {
 
   return (
     <>
-      <div className='container'>
+      <div className='form-container'>
         <form className='form' onSubmit=
         {handleSubmit}>
           <h1>Create Ticket</h1>
@@ -89,7 +89,7 @@ const CreateTicket = () => {
             value={newTicket?.description || ''}
             onChange={handleTextAreaChange}
           />
-          <label htmlFor='tUserId'>User's ID</label>
+          <label htmlFor='tUserId'>Assigned User</label>
           <select
             name='assignedUserId'
             value={newTicket?.assignedUserId || ''}
@@ -111,7 +111,7 @@ const CreateTicket = () => {
             )
           }
           </select>
-          <button type='submit' onSubmit={handleSubmit}>Submit Form</button>
+          <button type='submit' onSubmit={handleSubmit}>Create</button>
         </form>
       </div>
     </>
