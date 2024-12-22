@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
-import { Ticket } from '../models/ticket.js';
-import { User } from '../models/user.js';
+import { Ticket } from '../models/ticket';
+import { User } from '../models/user';
 
 // GET /tickets
 export const getAllTickets = async (_req: Request, res: Response) => {
@@ -24,7 +24,8 @@ export const getAllTickets = async (_req: Request, res: Response) => {
 export const getTicketById = async (req: Request, res: Response) => {
   const { id } = req.params;
   try {
-    const ticket = await Ticket.findByPk(id, {
+    const ticket = await Ticket.findOne({
+      where: { id },
       include: [
         {
           model: User,
@@ -58,7 +59,7 @@ export const createTicket = async (req: Request, res: Response) => {
 export const updateTicket = async (req: Request, res: Response) => {
   const { id } = req.params;
   const { name, status, description, assignedUserId } = req.body;
-  try {
+    const ticket = await Ticket.findOne({ where: { id } });
     const ticket = await Ticket.findByPk(id);
     if (ticket) {
       ticket.name = name;

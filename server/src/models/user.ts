@@ -9,7 +9,7 @@ interface UserAttributes {
 
 interface UserCreationAttributes extends Optional<UserAttributes, 'id'> {}
 
-export class User extends Model<UserAttributes, UserCreationAttributes> implements UserAttributes {
+export class User extends Model<UserAttributes, UserCreationAttributes> implements UserAttributes, Model {
   public id!: number;
   public username!: string;
   public password!: string;
@@ -42,16 +42,9 @@ export function UserFactory(sequelize: Sequelize): typeof User {
       },
     },
     {
-      tableName: 'users',
-      sequelize,
-      hooks: {
-        beforeCreate: async (user: User) => {
-          await user.setPassword(user.password);
-        },
-        beforeUpdate: async (user: User) => {
-          await user.setPassword(user.password);
-        },
-      }
+      sequelize, // Add sequelize instance here
+      tableName: 'users', // Add table name here
+      timestamps: true,
     }
   );
 

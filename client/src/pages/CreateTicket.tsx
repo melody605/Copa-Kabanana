@@ -6,7 +6,7 @@ import { UserData } from '../interfaces/UserData';
 import { retrieveUsers } from '../api/userAPI';
 
 const CreateTicket = () => {
-  const [newTicket, setNewTicket] = useState<TicketData | undefined>(
+  const [newTicket, setNewTicket] = useState<TicketData>(
     {
       id: 0,
       name: '',
